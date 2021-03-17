@@ -7,16 +7,19 @@ Route::prefix('minapp')->group(function (){
 
     Route::group(['namespace' => 'Minapp'], function () {
 
-        //Route::post('login', 'LoginController@login');//用户登陆
+        Route::post('login', 'LoginController@login');//用户登陆
         Route::get('banner', 'BannerController@banner');//获取banner列表;
         Route::get('affiche', 'AfficheController@affiche');//获取公告;
         Route::get('activity', 'ActivityController@activity');//获取活动;
         Route::get('channel','ChannelController@channel');//获取频道;
         Route::get('course','CourseController@course');//获取课程;
+        Route::get('about','AgreementController@about');//关于我们和隐私权益;
 
+        Route::post('enroll','EnrollController@enroll');//提交活动报名信息
+        
         Route::group(['middleware' => 'auth:api'], function () {   
-
-
+            Route::post('upload_img','UserInfoController@uploadImg');//上传图片
+            Route::post('update_info','UserInfoController@updateInfo');//更新用户信息
         });
     });
 
@@ -49,6 +52,11 @@ Route::prefix('admin')->group(function (){
             Route::resource('course', 'CourseController');//课程
 
             Route::resource('affiche', 'AfficheController');//公告
+
+            Route::resource('agreement', 'AgreementController');//协议
+            
+            Route::resource('enroll', 'EnrollController');//活动报名列表
+            
         });
     });
 
