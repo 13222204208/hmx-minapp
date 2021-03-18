@@ -15,8 +15,8 @@ class CreateChannelsTable extends Migration
     {
         Schema::create('channels', function (Blueprint $table) {
             $table->id();
-            $table->string('title')->nullable()->default('频道名称');
-            $table->text('content')->nullable()->default('频道简介');
+            $table->string('title')->nullable()->comment('频道名称');
+            $table->text('content')->nullable()->comment('频道简介');
             $table->string('cover')->nullable()->comment('封面图');
             $table->integer('sort')->default(1)->comment('排序');
             $table->tinyInteger('is_recommend')->default(0)->comment('是否推荐首页，0否 1,推荐');

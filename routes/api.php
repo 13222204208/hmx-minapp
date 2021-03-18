@@ -16,10 +16,12 @@ Route::prefix('minapp')->group(function (){
         Route::get('about','AgreementController@about');//关于我们和隐私权益;
 
         Route::post('enroll','EnrollController@enroll');//提交活动报名信息
-        
+
         Route::group(['middleware' => 'auth:api'], function () {   
             Route::post('upload_img','UserInfoController@uploadImg');//上传图片
             Route::post('update_info','UserInfoController@updateInfo');//更新用户信息
+
+            Route::post('pay_order','OrderController@payOrder');//支付订单          
         });
     });
 

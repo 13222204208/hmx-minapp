@@ -15,7 +15,7 @@ class CreateContentsTable extends Migration
     {
         Schema::create('contents', function (Blueprint $table) {
             $table->id();
-            $table->string('title')->nullable()->default('标题');
+            $table->string('title')->nullable()->comment('标题');
             $table->text('content')->comment('图文编辑');
             $table->integer('channel_id')->comment('选择频道');
             $table->tinyInteger('status')->default(1)->comment('1正常，0禁用');

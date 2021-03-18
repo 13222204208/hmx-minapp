@@ -13,7 +13,7 @@ trait OrderNum
         $num = $num+1;
         $number= sprintf ( "%02d",$num);//不足两位带前导0
 
-        $orderNum= $title.date("Ymd",time()).$number;
+        $orderNum= $title.date("YmdHis",time()).$number;
         return $orderNum;
     }
 
