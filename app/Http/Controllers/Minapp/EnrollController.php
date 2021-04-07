@@ -12,7 +12,9 @@ class EnrollController extends Controller
     public function enroll(EnrollRequest $request)
     {
         try {
+            $user= auth('api')->user();
             $data= $request->only('children_name','phone','enroll_name','activity_id');
+            $data["user_id"] = $user->id;
             Enroll::create($data);
             return $this->success();
         } catch (\Throwable $th) {

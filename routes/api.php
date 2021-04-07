@@ -15,13 +15,17 @@ Route::prefix('minapp')->group(function (){
         Route::get('course','CourseController@course');//获取课程;
         Route::get('about','AgreementController@about');//关于我们和隐私权益;
 
-        Route::post('enroll','EnrollController@enroll');//提交活动报名信息
+   
 
         Route::group(['middleware' => 'auth:api'], function () {   
             Route::post('upload_img','UserInfoController@uploadImg');//上传图片
             Route::post('update_info','UserInfoController@updateInfo');//更新用户信息
 
-            Route::post('pay_order','OrderController@payOrder');//支付订单          
+            Route::post('pay_order','OrderController@payOrder');//支付订单       
+            Route::get('order_list','OrderController@order_list');//我的订单    
+            
+            Route::post('enroll','EnrollController@enroll');//提交活动报名信息
+            Route::get('my_activity', 'ActivityController@myActivity');//我的活动;
         });
     });
 
@@ -58,6 +62,9 @@ Route::prefix('admin')->group(function (){
             Route::resource('agreement', 'AgreementController');//协议
             
             Route::resource('enroll', 'EnrollController');//活动报名列表
+            
+            Route::resource('order', 'OrderController');//订单管理
+            
             
         });
     });

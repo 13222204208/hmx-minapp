@@ -20,8 +20,8 @@ class LoginController extends Controller
                     'code' => 'required',
                     'nickname' => 'required',
                     'avatar' => 'required',
-                    'iv' => 'required',
-                    'encryptedData' => 'required'
+                    //'iv' => 'required',
+                    //'encryptedData' => 'required'
                 ],
                 [
                     'required' => ':attribute不能为空',
@@ -39,8 +39,7 @@ class LoginController extends Controller
             }
 
             $code = $request->code;
-            $iv = $request->iv;
-            $encryptedData = $request->encryptedData;
+
             $config = [
                 'app_id' => env('WECHAT_MINI_PROGRAM_APPID'),
                 'secret' => env('WECHAT_MINI_PROGRAM_SECRET'),
@@ -53,12 +52,18 @@ class LoginController extends Controller
                 return $this->failed('已过期或不正确');
             } 
 
-            $decryptedData = $miniProgram->encryptor->decryptData($data['session_key'], $iv, $encryptedData);
-            
+         
             $phone="";
-            if(isset($decryptedData['phoneNumber'])){
-               $phone = $decryptedData['phoneNumber'];
-             }
+            if($request->has("iv")){
+                $iv = $request->iv;
+                $encryptedData = $request->encryptedData;
+                $decryptedData = $miniProgram->encryptor->decryptData($data['session_key'], $iv, $encryptedData);
+
+                if(isset($decryptedData['phoneNumber'])){
+                    $phone = $decryptedData['phoneNumber'];
+                }
+            }
+
             $user= User::where('wx_id',$data['openid'])->first();
             if($user){
                 $vali= [
@@ -85,7 +90,7 @@ class LoginController extends Controller
 
                 $vali= [
                     'username'=>$newUser->username,
-                    'password'=> 'kd123456'
+                    'password'=> 'hmx123456'
                 ];
                 if (! $token = auth('api')->attempt($vali)) {
                     return  $this->failed('生成token错误');
