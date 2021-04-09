@@ -71,4 +71,21 @@ class OrderController extends Controller
             return $this->failed($th->getMessage());
         }
     }
+
+    public function delOrder(Request $request)
+    {
+        try {
+            $orderNum = $request->order_num;
+            $user = auth('api')->user();
+            $state= Order::where("order_num",$orderNum)->where("user_id",$user->id)->delete();
+            if($state){
+                return $this->success();
+            }else{
+                return $this->failed("删除失败");
+            }
+           
+        } catch (\Throwable $th) {
+            return $this->failed($th->getMessage());
+        }
+    }
 }

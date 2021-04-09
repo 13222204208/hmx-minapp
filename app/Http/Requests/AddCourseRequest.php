@@ -31,6 +31,7 @@ class AddCourseRequest extends FormRequest
             'content' => 'required',
             'title' => 'required',
             'price' => 'required|numeric',
+            'course_type_id' => 'required|numeric',
           ];
     }
 
@@ -42,6 +43,7 @@ class AddCourseRequest extends FormRequest
             'price.numeric' => '价格只能为数字',
             'content.required' => '简介必填',
             'tittle.required' => '课程名称必填',
+            'course_type_id.required' => '所属分类必填',
         ];
     }
 

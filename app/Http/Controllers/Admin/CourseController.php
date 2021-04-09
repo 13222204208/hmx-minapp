@@ -28,7 +28,7 @@ class CourseController extends Controller
             }
             $item= Course::when($title,function($query) use ($title){
                 return $query->where('title','like','%'.$title.'%');
-            })->skip($page)->take($limit)->get();
+            })->with("type")->skip($page)->take($limit)->get();
     
             $total= Course::when($title,function($query) use ($title){
                 return $query->where('title','like','%'.$title.'%');
@@ -61,7 +61,7 @@ class CourseController extends Controller
     public function store(AddCourseRequest $request)
     {
         try {
-            $data= $request->only('title','cover','content','price','sort','is_recommend');
+            $data= $request->only('title','cover','content','price','sort','is_recommend','course_type_id');
             $data['content']= $this->delImgUrl($data['content']);
             Course::create($data);
             return $this->success();

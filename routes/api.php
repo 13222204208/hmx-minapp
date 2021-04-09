@@ -23,6 +23,7 @@ Route::prefix('minapp')->group(function (){
 
             Route::post('pay_order','OrderController@payOrder');//支付订单       
             Route::get('order_list','OrderController@order_list');//我的订单    
+            Route::post('del_order','OrderController@delOrder');//删除订单 
             
             Route::post('enroll','EnrollController@enroll');//提交活动报名信息
             Route::get('my_activity', 'ActivityController@myActivity');//我的活动;
@@ -68,6 +69,8 @@ Route::prefix('admin')->group(function (){
             Route::resource('order', 'OrderController');//订单管理
             
             Route::resource('message', 'MessageController');//活动通知
+            
+            Route::resource('course_type', 'CourseTypeController');//课程分类
             
             
         });

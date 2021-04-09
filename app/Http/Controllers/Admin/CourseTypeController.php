@@ -3,10 +3,11 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
-use App\Models\Channel;
+use App\Models\Course;
+use App\Models\CourseType;
 use Illuminate\Http\Request;
 
-class ChannelController extends Controller
+class CourseTypeController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -18,22 +19,15 @@ class ChannelController extends Controller
         try {
             $all= $request->all();
             if(empty($all)){
-                $data= Channel::all();
+                $data= CourseType::all();
                 return $this->success($data); 
             }
             $limit = $all['limit'];
             $page = ($all['page'] -1)*$limit;
-            $title = false;
-            if(isset($all['title'])){
-                $title = $all['title'];
-            }
-            $item= Channel::when($title,function($query) use ($title){
-                return $query->where('title','like','%'.$title.'%');
-            })->skip($page)->take($limit)->get();
+        
+            $item= CourseType::skip($page)->take($limit)->get();
     
-            $total= Channel::when($title,function($query) use ($title){
-                return $query->where('title','like','%'.$title.'%');
-            })->count();
+            $total= CourseType::count();
     
             $data['item'] = $item;
             $data['total'] = $total;
@@ -63,7 +57,7 @@ class ChannelController extends Controller
     {
         try {
             $data= $request->all();
-            Channel::create($data);
+            CourseType::create($data);
             return $this->success();
         } catch (\Throwable $th) {
             return $this->failed($th->getMessage());  
@@ -90,7 +84,7 @@ class ChannelController extends Controller
     public function edit($id)
     {
         try {
-            $data= Channel::find($id);
+            $data= CourseType::find($id);
             return $this->success($data);
         } catch (\Throwable $th) {
             return $this->failed($th->getMessage());   
@@ -107,8 +101,8 @@ class ChannelController extends Controller
     public function update(Request $request, $id)
     {
         try {
-            $data= $request->only('title','cover','sort','is_recommend','content');
-            $channel = Channel::find($id);
+            $data= $request->only('title','sort');
+            $channel = CourseType::find($id);
             $channel->update($data);
             return $this->success();
         } catch (\Throwable $th) {
@@ -125,9 +119,10 @@ class ChannelController extends Controller
     public function destroy($id)
     {
         try {
-            $channel= Channel::find($id);
-            $channel->content()->delete();
-            Channel::destroy($id);
+            
+            CourseType::destroy($id);
+       
+            Course::where("course_type_id",$id)->delete();
             return $this->success();
         } catch (\Throwable $th) {
             return $this->failed($th->getMessage());

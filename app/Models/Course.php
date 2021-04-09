@@ -13,5 +13,9 @@ class Course extends BasicModel
     {
         return $this->replaceImgUrl($value);
     }
- 
+    
+    public function type()
+    {
+        return $this->hasOne("App\Models\CourseType","id","course_type_id");
+    }
 }

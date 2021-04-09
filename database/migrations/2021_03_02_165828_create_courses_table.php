@@ -21,6 +21,7 @@ class CreateCoursesTable extends Migration
             $table->string('schedule')->nullable()->comment('上课时间表');
             $table->decimal('price',9,2)->nullable();
             $table->integer('sort')->default(1)->comment('排序');
+            $table->integer('course_type_id')->default(1)->comment('课程分类名称id');
             $table->tinyInteger('is_recommend')->default(0)->comment('是否推荐，0否 1,推荐');
             $table->tinyInteger('status')->default(1)->comment('1正常，0禁用');
             $table->timestamps();
