@@ -15,7 +15,9 @@ Route::prefix('minapp')->group(function (){
         Route::get('course','CourseController@course');//获取课程;
         Route::get('about','AgreementController@about');//关于我们和隐私权益;
 
-   
+        Route::get('course_type','CourseController@courseType');//获取课程类型;
+        Route::get('course_shop','CourseController@courseShop');//课程商城;
+        Route::get('course_cover','CourseController@courseCover');//课程商城封面;
 
         Route::group(['middleware' => 'auth:api'], function () {   
             Route::post('upload_img','UserInfoController@uploadImg');//上传图片
